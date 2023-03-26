@@ -37,7 +37,7 @@ class Query {
     console.log(data);
   }
 
-  async deleteTaskByTaskId<T>(taskId: number): Promise<T | void> {
+  async deleteTaskByTaskId(taskId: number): Promise<void> {
     const config: RequestInit = { method: 'DELETE' };
 
     const response = await fetch(`${this.url}/${taskId}`, config);
@@ -47,8 +47,6 @@ class Query {
       return;
     }
 
-    const data: T[] = await response.json();
-    console.log(data);
     console.log(`Записи с id: ${taskId} была удалена.`);
   }
 
@@ -113,4 +111,4 @@ request.getAllTasks<Response>();
 request.getTaskByTaskId<Response>(125);
 request.postTask<Response>();
 request.patchTaskById<Response>(125);
-request.deleteTaskByTaskId<Response>(126);
+request.deleteTaskByTaskId(126);
