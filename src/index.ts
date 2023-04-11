@@ -1,4 +1,4 @@
-interface Response {
+interface TaskResponse {
   name: string;
   info: string;
   isImportant: boolean;
@@ -6,7 +6,7 @@ interface Response {
   id: number;
 }
 
-class Query {
+class QueryOfTasks {
   url: string;
 
   constructor(url: string) {
@@ -50,8 +50,7 @@ class Query {
     console.log(`Записи с id: ${taskId} была удалена.`);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-  async postTask<T>(nameValue: string = 'Caesar', infoValue: string = 'Veni, vidi, vici.'): Promise<T | void> {
+  async postTask<T>(nameValue = 'Caesar', infoValue = 'Veni, vidi, vici.'): Promise<T | void> {
     const config: RequestInit = {
       method: 'POST',
       headers: {
@@ -75,13 +74,7 @@ class Query {
     console.log(data);
   }
 
-  async patchTaskById<T>(
-    taskId: number,
-    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    nameValue: string = 'Moby',
-    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    infoValue: string = 'American musician'
-  ): Promise<T | void> {
+  async patchTaskById<T>(taskId: number, nameValue = 'Moby', infoValue = 'American musician'): Promise<T | void> {
     const config: RequestInit = {
       method: 'PATCH',
       headers: {
@@ -106,9 +99,9 @@ class Query {
   }
 }
 
-const request = new Query('https://intership-liga.ru/tasks');
-request.getAllTasks<Response>();
-request.getTaskByTaskId<Response>(125);
-request.postTask<Response>();
-request.patchTaskById<Response>(125);
+const request = new QueryOfTasks('https://intership-liga.ru/tasks');
+request.getAllTasks<TaskResponse>();
+request.getTaskByTaskId<TaskResponse>(125);
+request.postTask<TaskResponse>();
+request.patchTaskById<TaskResponse>(125);
 request.deleteTaskByTaskId(126);
